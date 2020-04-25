@@ -4,6 +4,7 @@ import { axiosWithAuth } from '../utils/axiosWithAuth';
 const initialColor = {
   color: '',
   code: { hex: '' },
+  id: '',
 };
 
 const ColorList = ({ colors, updateColors }) => {
@@ -16,14 +17,19 @@ const ColorList = ({ colors, updateColors }) => {
     setColorToEdit(color);
   };
 
+  const body = { ...colorToEdit };
+  const id = colorToEdit.id;
+
   const saveEdit = (e) => {
     e.preventDefault();
-    colors.map((color) => {
-      axiosWithAuth()
-        .put(`http://localhost:5000/api/colors/${colors.id}`, colorToEdit)
-        .then((res) => console.log({ res }))
-        .catch((err) => console.error({ err }));
-    });
+    axiosWithAuth()
+      .put(`http://localhost:5000/api/colors/${id}`, body)
+      .then((res) => {
+        updateColors(
+          colors.map((item) => (item.id === id ? colorToEdit : item))
+        );
+      })
+      .catch((err) => console.error({ err }));
 
     // Make a put request to save your updated color
     // think about where will you get the id from...
