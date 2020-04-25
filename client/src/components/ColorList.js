@@ -4,7 +4,6 @@ import { axiosWithAuth } from '../utils/axiosWithAuth';
 const initialColor = {
   color: '',
   code: { hex: '' },
-  id: '',
 };
 
 const ColorList = ({ colors, updateColors }) => {
@@ -41,7 +40,8 @@ const ColorList = ({ colors, updateColors }) => {
     axiosWithAuth()
       .delete(`http://localhost:5000/api/colors/${color.id}`)
       .then((res) => {
-        updateColors(...colors, res.data);
+        console.log({ res });
+        // updateColors(...colors, res.data);
       })
       .catch((err) => console.error({ err }));
   };
