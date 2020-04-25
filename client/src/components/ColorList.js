@@ -17,11 +17,14 @@ const ColorList = ({ colors, updateColors }) => {
   };
 
   const saveEdit = (e) => {
-    // e.preventDefault();
-    // axiosWithAuth()
-    //   .put(`http://localhost:5000/api/colors/${colors.id}`, colorToEdit)
-    //   .then((res) => console.log({ res }))
-    //   .catch((err) => console.error({ err }));
+    e.preventDefault();
+    colors.map((color) => {
+      axiosWithAuth()
+        .put(`http://localhost:5000/api/colors/${colors.id}`, colorToEdit)
+        .then((res) => console.log({ res }))
+        .catch((err) => console.error({ err }));
+    });
+
     // Make a put request to save your updated color
     // think about where will you get the id from...
     // where is is saved right now?
@@ -55,7 +58,7 @@ const ColorList = ({ colors, updateColors }) => {
               </span>{' '}
               {color.color}
             </span>
-            {console.log(color.code.hex)}
+            {console.log('color.code.hex being returned', color.code.hex)}
             <div
               className='color-box'
               style={{ backgroundColor: color.code.hex }}
